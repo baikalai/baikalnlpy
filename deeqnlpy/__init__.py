@@ -49,11 +49,16 @@ Get deeq NLP
  https://docs.google.com/forms/d/e/1FAIpQLSfSJQCMwm0pS1nJiirwUNjfj-7jT-T_CLUfgMc-vTpRbHZZnw/viewform
 """
 
+import sys
+import os
+
+_pb_ = os.path.join(os.path.dirname(__file__), 'lib')
+sys.path.insert(0, _pb_)
+
 from deeqnlpy._tagger import Tagger, Tagged
 from deeqnlpy._custom_dict import CustomDict
 from deeqnlpy._custom_dict_client import CustomDictionaryServiceClient
 from deeqnlpy._lang_service_client import DeeqLanguageServiceClient
-import sys
-sys.path.append("")
 
 version = "0.9"
+deeq_nlp_version = "1.4.2"

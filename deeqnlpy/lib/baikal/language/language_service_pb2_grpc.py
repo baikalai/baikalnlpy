@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from deeqnlpy.baikal.language import language_service_pb2 as baikal_dot_language_dot_language__service__pb2
+from baikal.language import language_service_pb2 as baikal_dot_language_dot_language__service__pb2
 
 
 class LanguageServiceStub(object):

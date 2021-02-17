@@ -24,7 +24,7 @@ clean:
 	find . -iname "*.pyc" -delete
 
 venv-poetry: venv
-	@$(PY3) -m pip install --upgrade poetry
+	@$(PY3) -m pip install --upgrade poetry &> /dev/null
 
 build: venv-poetry
 	@$(POETRY) build
@@ -33,7 +33,7 @@ publish: build
 	@$(POETRY) publish
 
 venv-pytest: venv
-	@$(PY3) -m pip install --upgrade pytest
+	@$(PY3) -m pip install --upgrade pytest &> /dev/null
 
-testall: venv-pytest
+testall: venv
 	@$(PY3) -m pytest tests/

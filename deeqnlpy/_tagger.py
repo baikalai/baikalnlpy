@@ -7,7 +7,7 @@ from google.protobuf.json_format import MessageToDict
 
 from deeqnlpy._custom_dict import CustomDict
 from deeqnlpy._lang_service_client import DeeqLanguageServiceClient
-from deeqnlpy.baikal.language.language_service_pb2 import AnalyzeSyntaxResponse, Morpheme
+from baikal.language.language_service_pb2 import AnalyzeSyntaxResponse, Morpheme
 
 
 class Tagged:

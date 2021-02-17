@@ -3,9 +3,9 @@ from typing import List
 import grpc
 from google.protobuf.empty_pb2 import Empty
 
-import deeqnlpy.baikal.language.custom_dict_pb2 as pb
-import deeqnlpy.baikal.language.custom_dict_pb2_grpc as cds
-import deeqnlpy.baikal.language.dict_common_pb2 as common
+import baikal.language.custom_dict_pb2 as pb
+import baikal.language.custom_dict_pb2_grpc as cds
+import baikal.language.dict_common_pb2 as common
 
 
 def build_dict_set(domain: str, name: str, dict_set: set) -> common.DictSet:

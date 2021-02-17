@@ -1,7 +1,7 @@
 import grpc
 
-import deeqnlpy.baikal.language.language_service_pb2 as pb
-import deeqnlpy.baikal.language.language_service_pb2_grpc as ls
+import baikal.language.language_service_pb2 as pb
+import baikal.language.language_service_pb2_grpc as ls
 
 MAX_MESSAGE_LENGTH = 100 * 1024 * 1024
 

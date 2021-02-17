@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from ._custom_dict_client import CustomDictionaryServiceClient
-from deeqnlpy.baikal.language.custom_dict_pb2 import CustomDictionary
+from baikal.language.custom_dict_pb2 import CustomDictionary
 
 
 def read_dic_file(fn):
