@@ -1,0 +1,4 @@
+* text eol-lf
+*.pkl -text -diff
+*.jpg -text -diff
+*.h5 -text -diff
