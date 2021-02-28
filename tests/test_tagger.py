@@ -1,6 +1,5 @@
 #!env python3
 # -*- coding: utf-8 -*-
-import sys
 import pytest
 
 
@@ -17,18 +16,18 @@ def sample1():
 
 
 def test_tagger_pos(tagger_instance, sample1):
-    assert tagger_instance.pos(sample1) ==\
-        [('오늘', 'NNG'),
-         ('은', 'JX'),
-         ('정말', 'MAG'),
-         ('춥', 'VA'),
-         ('ㄴ', 'ETM'),
-         ('날', 'NNG'),
-         ('이', 'VCP'),
-         ('네', 'EF'),
-         ('요', 'JX'),
-         ('.', 'SF')
-         ]
+    assert tagger_instance.pos(sample1) == \
+           [('오늘', 'NNG'),
+            ('은', 'JX'),
+            ('정말', 'MAG'),
+            ('춥', 'VA'),
+            ('ㄴ', 'ETM'),
+            ('날', 'NNG'),
+            ('이', 'VCP'),
+            ('네', 'EF'),
+            ('요', 'JX'),
+            ('.', 'SF')
+            ]
 
 
 def test_tagger_pos_join(tagger_instance, sample1):
@@ -46,23 +45,38 @@ def test_tagger_pos_join(tagger_instance, sample1):
             ]
 
 
+def test_tagger_pos_full(tagger_instance, sample1):
+    temp = tagger_instance.pos(sample1, full=True)
+    temp2 = [(t[0], t[1], t[2]) for t in temp]
+    assert (temp2 == [('오늘', 'NNG', 'IN_WORD_EMBEDDING'),
+                      ('은', 'JX', 'IN_WORD_EMBEDDING'),
+                      ('정말', 'MAG', 'IN_WORD_EMBEDDING'),
+                      ('춥', 'VA', 'IN_WORD_EMBEDDING'),
+                      ('ㄴ', 'ETM', 'IN_WORD_EMBEDDING'),
+                      ('날', 'NNG', 'IN_WORD_EMBEDDING'),
+                      ('이', 'VCP', 'IN_WORD_EMBEDDING'),
+                      ('네', 'EF', 'IN_WORD_EMBEDDING'),
+                      ('요', 'JX', 'IN_WORD_EMBEDDING'),
+                      ('.', 'SF', 'IN_WORD_EMBEDDING')])
+
+
 def test_tagger_morphs(tagger_instance, sample1):
-    assert tagger_instance.morphs(sample1) ==\
-        ['오늘',
-         '은',
-         '정말',
-         '춥',
-         'ㄴ',
-         '날',
-         '이',
-         '네',
-         '요',
-         '.']
+    assert tagger_instance.morphs(sample1) == \
+           ['오늘',
+            '은',
+            '정말',
+            '춥',
+            'ㄴ',
+            '날',
+            '이',
+            '네',
+            '요',
+            '.']
 
 
 def test_tagger_nouns(tagger_instance, sample1):
-    assert tagger_instance.nouns(sample1) ==\
-        ['오늘', '날']
+    assert tagger_instance.nouns(sample1) == \
+           ['오늘', '날']
 
 
 def test_tagger_tag_as_json_str(tagger_instance, sample1):

@@ -19,6 +19,11 @@ class Tagged:
     r: AnalyzeSyntaxResponse = None
 
     def __init__(self, phrase: str, res: AnalyzeSyntaxResponse):
+        """
+        constructor, which is used internally.
+        :param phrase: requested sentences.
+        :param res:
+        """
         super().__init__()
         self.phrase = phrase
         self.r = res
@@ -29,16 +34,32 @@ class Tagged:
             self.phrase = ''
 
     def msg(self) -> AnalyzeSyntaxResponse:
+        """
+        Protobuf message object containing all of NLP engine.
+        """
         return self.r
 
     def as_json(self) -> Union[None, str, bool, float]:
+        """
+        convert the message to a json object.
+        :return: Json Obejct
+        """
         return MessageToDict(self.r)
 
     def as_json_str(self) -> str:
+        """
+        a json string representing analyzed sentences.
+        :return: json string
+        """
         d = MessageToDict(self.r)
         return json.dumps(d, ensure_ascii=False, indent=2)
 
     def print_as_json(self, out: IO = stdout):
+        """
+        print the analysis result
+        :param out: File, if nothing provided, sys.stdout is used.
+        :return: None
+        """
         d = MessageToDict(self.r)
         json.dump(d, out, ensure_ascii=False, indent=2)
 
@@ -53,10 +74,10 @@ class Tagged:
                 return f'{m.text.content}/{Morpheme.Tag.Name(m.tag)}'
         else:
             if full:
-                (m.text.content,
-                 Morpheme.Tag.Name(m.tag),
-                 m.probability,
-                 Morpheme.OutOfVocab.Name(m.out_of_vocab))
+                return m.text.content,\
+                       Morpheme.Tag.Name(m.tag),\
+                       Morpheme.OutOfVocab.Name(m.out_of_vocab),\
+                       m.probability
             else:
                 return m.text.content, Morpheme.Tag.Name(m.tag)
 

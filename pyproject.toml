@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "deeqnlpy"
-version = "0.9.2"
+version = "0.9.3"
 description = "The deeq nlp python client library"
 authors = ["Gihyun YUN <gih2yun@baikal.ai>"]
 license = "BSD-3-Clause"
@@ -12,6 +12,8 @@ classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Science/Research",
     "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Education",
     "Natural Language :: Korean",
     "Operating System :: OS Independent",
     "Typing :: Typed",

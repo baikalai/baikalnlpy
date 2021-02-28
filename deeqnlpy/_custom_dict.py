@@ -80,18 +80,35 @@ class CustomDict():
         self.cp_set = dict_set
 
     def copy_cp_caret_set(self, dict_set: set):
+        """
+        copy custom dictionary set for "compound noun".
+        :param dict_set: set
+        :return: None
+        """
         self.cp_caret_set = dict_set
 
     def update(self):
+        """
+        update customized dictionary to deeq NLP server.
+        :return: return True on success
+        """
         return self.stub.update(self.domain,
                                 self.np_set,
                                 self.cp_set,
                                 self.cp_caret_set)
 
     def get(self) -> CustomDictionary:
+        """
+        get custom dictionary from deeq NLP server.
+        :return: CustomDictionary object.
+        """
         return self.stub.get(self.domain)
 
     def clear(self):
+        """
+        clear loaded or copied custom dictionary set.
+        :return:
+        """
         self.np_set.clear()
         self.cp_set.clear()
         self.cp_caret_set.clear()

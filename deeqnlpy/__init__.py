@@ -8,38 +8,36 @@ Provides
 
 How to use the documentation
 ----------------------------
-Full documentation for deeq NLP is available in official
+Full documentation for deeq NLP is available in
 installable tarball or docker images.
 - see `docs/intro.html` at installable tarball.
-- or `http://localhost:5757/docs/intro.html` after running docker.
+- or `http://localhost:5757/intro.html` after running docker.
 
 The docstring examples assume that `deeqnlpy` has been imported as `dn`::
   >>> import deeqnlpy as dn
 
-Use the built-in ``help`` function to view a function's docstring::
+Use the built-in ``help`` function to view a class's docstring::
   >>> help(dn.Tagger)
-  ... # doctest: +SKIP
+  ...
 
 Classes
 -------
 Tagger
     the deeq NLP POS tagger for Korean
     `from deeqnlpy import Tagger`
+Tagged
+    Wrapper for tagged output
+    `from deeqnlpy import Tagged`
 CustomDict
     Custom dictionary for Korean.
     `from deeqnlpy import CustomDict`
-DeeqTaggerCall
-    Wrapper for single tagging function.
-    `from deeqnlpy import DeeqTaggerCall`
-DeeqNlp
-    Most available library.
-    `from deeqnlpy import DeeqNlp`
 
 Version
 -------
 ```
 import deeqnlpy as dn
 print(dn.version)
+print(dn.deeq_nlp_version)
 ```
 
 Get deeq NLP
