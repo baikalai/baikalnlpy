@@ -7,7 +7,7 @@ from google.protobuf.json_format import MessageToDict
 
 from deeqnlpy._custom_dict import CustomDict
 from deeqnlpy._lang_service_client import DeeqLanguageServiceClient
-from baikal.language.language_service_pb2 import AnalyzeSyntaxResponse, Morpheme
+from baikal.language.language_service_pb2 import AnalyzeSyntaxResponse, Morpheme, Sentence, Token
 
 
 class Tagged:
@@ -39,6 +39,12 @@ class Tagged:
         """
         return self.r
 
+    def sentences(self) -> [Sentence]:
+        """
+        :return: get sentences from tagged results.
+        """
+        return self.r.sentences
+
     def as_json(self) -> Union[None, str, bool, float]:
         """
         convert the message to a json object.
@@ -64,16 +70,16 @@ class Tagged:
         json.dump(d, out, ensure_ascii=False, indent=2)
 
     @staticmethod
-    def _pos(m: Morpheme, join: bool, full: bool):
+    def _pos(m: Morpheme, join: bool, detail: bool):
         if join:
-            if full:
+            if detail:
                 p = f':{m.probability:5.3f}' if m.probability > 0 else ''
                 oov = f'#{Morpheme.OutOfVocab.Name(m.out_of_vocab)}' if m.out_of_vocab != 0 else ''
                 return f'{m.text.content}/{Morpheme.Tag.Name(m.tag)}{p}{oov}'
             else:
                 return f'{m.text.content}/{Morpheme.Tag.Name(m.tag)}'
         else:
-            if full:
+            if detail:
                 return m.text.content,\
                        Morpheme.Tag.Name(m.tag),\
                        Morpheme.OutOfVocab.Name(m.out_of_vocab),\
@@ -81,19 +87,19 @@ class Tagged:
             else:
                 return m.text.content, Morpheme.Tag.Name(m.tag)
 
-    def pos(self, flatten: bool = True, join: bool = False, full: bool = False) -> []:
+    def pos(self, flatten: bool = True, join: bool = False, detail: bool = False) -> []:
         """
         POS tagger to tuple.
         :param flatten : If False, returns original morphs.
         :param join    : If True, returns joined sets of morph and tag.
-        :param full    : if True, returns everything of morph result
+        :param detail  : if True, returns everything of morph result
         """
         if flatten:
-            return [Tagged._pos(m, join, full) for s in self.r.sentences
+            return [Tagged._pos(m, join, detail) for s in self.r.sentences
                     for token in s.tokens
                     for m in token.morphemes]
         else:
-            return [[Tagged._pos(m, join, full) for m in token.morphemes]
+            return [[Tagged._pos(m, join, detail) for m in token.morphemes]
                     for s in self.r.sentences
                     for token in s.tokens]
 
@@ -185,15 +191,15 @@ class Tagger:
         return Tagged(p,
                       self.client.analyze_syntax(p, self.domain, auto_split=False))
 
-    def pos(self, phrase: str, flatten: bool = True, join: bool = False, full: bool = False) -> []:
+    def pos(self, phrase: str, flatten: bool = True, join: bool = False, detail: bool = False) -> []:
         """
         POS tagger.
         :param phrase  : string to analyse
         :param flatten : If False, returns original morphs.
         :param join    : If True, returns joined sets of morph and tag.
-        :param full    : if True, returns every things of morph result
+        :param detail  : if True, returns every things of morph result
         """
-        return self.tag(phrase).pos(flatten, join, full)
+        return self.tag(phrase).pos(flatten, join, detail)
 
     def morphs(self, phrase: str) -> []:
         """Parse phrase to morphemes."""

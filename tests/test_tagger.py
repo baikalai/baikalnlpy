@@ -45,8 +45,8 @@ def test_tagger_pos_join(tagger_instance, sample1):
             ]
 
 
-def test_tagger_pos_full(tagger_instance, sample1):
-    temp = tagger_instance.pos(sample1, full=True)
+def test_tagger_pos_detail(tagger_instance, sample1):
+    temp = tagger_instance.pos(sample1, detail=True)
     temp2 = [(t[0], t[1], t[2]) for t in temp]
     assert (temp2 == [('오늘', 'NNG', 'IN_WORD_EMBEDDING'),
                       ('은', 'JX', 'IN_WORD_EMBEDDING'),
