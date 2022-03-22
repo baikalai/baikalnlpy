@@ -38,19 +38,19 @@ Operating System :: MacOS
 # )
 
 setuptools.setup(
-    name="deeqnlpy",
+    name="baikalnlpy",
     version="1.0.0",
     author="Gihyun YUN",
     author_email="gih2yun@baikal.ai",
-    description="The deeq nlp python api module",
+    description="The baikal nlp python api module",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://baikal.ai/app2/#/morpheme",
-    download_url="https://pypi.python.org/pypi/deeqnlpy",
+    url="https://baikal.ai/nlpdemo",
+    download_url="https://pypi.python.org/pypi/baikalnlpy",
     project_urls={
-        "Bug Tracker": "https://github.com/baikalai/deeqnlpy/issues",
+        "Bug Tracker": "https://github.com/baikalai/baikalnlpy/issues",
         # "Documentation": get_docs_url(),
-        "Source Code": "https://github.com/baikalai/deeqnlpy",
+        "Source Code": "https://github.com/baikalai/baikalnlpy",
     },
     license='BSD',
     platform='Independent',

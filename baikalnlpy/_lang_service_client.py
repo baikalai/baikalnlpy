@@ -6,7 +6,7 @@ import baikal.language.language_service_pb2_grpc as ls
 MAX_MESSAGE_LENGTH = 100 * 1024 * 1024
 
 
-class DeeqLanguageServiceClient:
+class BaikalLanguageServiceClient:
 
     stub = None
 

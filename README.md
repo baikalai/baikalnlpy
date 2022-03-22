@@ -1,34 +1,32 @@
 # What is this?
 
-`deeqnlpy` is the python 3 library for deeq NLP.
+`baikalnlpy` is the python 3 library for baikal NLP.
 
-Deeq(pronounce as deeque) NLP is a Korean NLP,
+Baikal NLP is a Korean NLP,
 which provides tokenizing, POS tagging for Korean.
 
 ## How to install
 
 ```shell
-pip3 install deeqnlpy
+pip3 install baikalnlpy
 ```
 
-## How to get deeq NLP
-- Click [this form](https://docs.google.com/forms/d/e/1FAIpQLSfSJQCMwm0pS1nJiirwUNjfj-7jT-T_CLUfgMc-vTpRbHZZnw/viewform)
-- Fill it.
-- Get emailed download link, a license file.
+## How to get baikal NLP
+- Go to https://license.baikal.ai/.
+  - With registration, for the first time, you can get a free license for 3 months.
 - Or use docker image.
 ```shell
-docker pull baikalai/deeq-nlp:v1.4.2
+docker pull baikalai/baikal-nlp:v1.7.0
 ```
-- Caution: You should use deeq NLP v1.4.2 or later.
 
 ## How to use
 
 ```python
 import sys
 import google.protobuf.text_format as tf
-from deeqnlpy import Tagger
+from baikalnlpy import Tagger
 
-my_tagger = Tagger('localhost') # If you have your own local deeq NLP. 
+my_tagger = Tagger('localhost') # If you have your own localhost baikal NLP. 
 # or
 tagger = Tagger() # With smaller public cloud instance, it may be slow.
 

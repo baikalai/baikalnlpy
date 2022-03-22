@@ -1,3 +1,5 @@
-grpcio==1.35.0
-protobuf==3.14.0
-setuptools~=47.1.0
+grpcio==1.32.0
+googleapis-common-protos==1.56.0
+protobuf==3.19.4
+baikalai-apis==0.9.1
+setuptools~=60.5.0  # 

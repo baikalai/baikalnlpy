@@ -7,6 +7,7 @@ PIP3=venv/bin/pip3
 PY3=venv/bin/python3
 POETRY=venv/bin/poetry
 venv-local:
+	@echo do not use, python 3.9, with this version,  failed in installing grpcio.
 	@test -d venv || python3 -m venv venv
 
 venv-pip-upgrade: venv-local

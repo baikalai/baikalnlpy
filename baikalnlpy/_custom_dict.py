@@ -25,11 +25,11 @@ class CustomDict():
     :ref:`optional-installations`.
     .. code-block:: python
         :emphasize-lines: 1
-        >>> import deeqnlpy as dn
-        >>> tagger = dn.Tagger()
+        >>> import baikalnlpy as bn
+        >>> tagger = bn.Tagger()
         >>> cd = tagger.custom_dict("law")
         >>> # or
-        >>> cd = dn.CustomDict("law", "localhost", 5656)
+        >>> cd = bn.CustomDict("law", "localhost", 5656)
         >>> cd.read_cp_set_from_file("my_np_set.txt")
         >>> cd.copy_cp_set(set(['새단어', '코로나19', 'K방역']))
         >>> cd.read_cp_caret_set_from_file('my_cp_caret.txt')
@@ -54,7 +54,7 @@ class CustomDict():
 
     def __init__(self, domain: str, host: str = None, port: int = 5656):
         if host is None:
-            host = 'nlp.deeq.ai'
+            host = 'nlp.baikal.ai'
         if port is None:
             port = 5656
         addr = host + ':' + str(port)
@@ -89,7 +89,7 @@ class CustomDict():
 
     def update(self):
         """
-        update customized dictionary to deeq NLP server.
+        update customized dictionary to baikal NLP server.
         :return: return True on success
         """
         return self.stub.update(self.domain,
@@ -99,7 +99,7 @@ class CustomDict():
 
     def get(self) -> CustomDictionary:
         """
-        get custom dictionary from deeq NLP server.
+        get custom dictionary from baikal NLP server.
         :return: CustomDictionary object.
         """
         return self.stub.get(self.domain)

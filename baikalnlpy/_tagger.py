@@ -5,8 +5,8 @@ from typing import IO, Union
 
 from google.protobuf.json_format import MessageToDict
 
-from deeqnlpy._custom_dict import CustomDict
-from deeqnlpy._lang_service_client import DeeqLanguageServiceClient
+from baikalnlpy._custom_dict import CustomDict
+from baikalnlpy._lang_service_client import BaikalLanguageServiceClient
 from baikal.language.language_service_pb2 import AnalyzeSyntaxResponse, Morpheme, Sentence, Token
 
 
@@ -125,13 +125,13 @@ class Tagged:
 
 
 class Tagger:
-    """Wrapper for `deeq-nlp v1.4.x <https://github.com/deeq-ai>`_.
-    'DeeqNLP' is a morphological analyzer developed by Baikal-ai.
+    """Wrapper for `baikal-nlp v1.7.x <https://github.com/baikal-ai>`_.
+    'baikalNLP' is a morphological analyzer developed by Baikal-ai.
 
     .. code-block:: python
         :emphasize-lines: 1
-        >>> import deeqnlpy as dn
-        >>> tagger = dn.Tagger(domain="custom")
+        >>> import baikalnlpy as bn
+        >>> tagger = bn.Tagger(domain="custom")
         >>> print(tagger.morphs('안녕하세요, 반가워요.'))
         ['안녕', '하', '시', '어요', ',', '반갑', '어요', '.']
         >>> print(tagger.nouns('나비 허리에 새파란 초생달이 시리다.'))
@@ -139,13 +139,13 @@ class Tagger:
         >>> print(tagger.pos('햇빛이 선명하게 나뭇잎을 핥고 있었다.'))
         [('햇빛', 'NNG'), ('이', 'JKS'), ('선명', 'NNG'), ('하', 'XSA'), ('게', 'EC'), ('나뭇잎', 'NNG'),
          ('을', 'JKO'), ('핥', 'VV'), ('고', 'EC'), ('있', 'VX'), ('었', 'EP'), ('다', 'EF'), ('.', 'SF')]
-    :param host         : str. host name for deeq nlp server
-    :param port         : int. port  for deeq nlp server
+    :param host         : str. host name for baikal nlp server
+    :param port         : int. port  for baikal nlp server
     :param domain       : custom domain name for nlp request
     """
 
     domain = None
-    host = "nlp.deeq.ai"
+    host = "nlp.baikal.ai"
     post = 5656
 
     def __init__(self, host: str = None, port: int = 5656, domain: str = None):
@@ -157,7 +157,7 @@ class Tagger:
         self.domain = domain
 
         addr = self.host + ':' + str(self.port)
-        self.client = DeeqLanguageServiceClient(addr)
+        self.client = BaikalLanguageServiceClient(addr)
 
     def set_domain(self, domain: str):
         """

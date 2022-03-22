@@ -1,13 +1,13 @@
 [tool.poetry]
-name = "deeqnlpy"
-version = "0.9.4"
-description = "The deeq nlp python client library"
+name = "baikalnlpy"
+version = "1.0.0"
+description = "The baikal nlp python client library"
 authors = ["Gihyun YUN <gih2yun@baikal.ai>"]
 license = "BSD-3-Clause"
 readme = "README.md"
-homepage = "https://baikal.ai/app2/#/morpheme"
-repository = "https://github.com/baikalai/deeqnlpy"
-keywords = [ "NLP", "Korean", "Deep Learning", "POS tagger"]
+homepage = "https://baikal.ai/nlpdemo"
+repository = "https://github.com/baikalai/baikalnlpy"
+keywords = [ "NLP", "Korean", "Deep Learning", "POS tagger", "baikal.ai"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Science/Research",
@@ -30,8 +30,10 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.6"
-grpcio = "1.35.0"
-protobuf = "3.14.0"
+grpcio = "^1.32.0"
+protobuf = "^3.19.4"
+googleapis-common-protos = "^1.56.0"
+baikalai-apis = "^0.9.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.2"

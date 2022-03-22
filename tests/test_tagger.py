@@ -5,8 +5,8 @@ import pytest
 
 @pytest.fixture
 def tagger_instance():
-    import deeqnlpy as dn
-    t = dn.Tagger()
+    import baikalnlpy as bn
+    t = bn.Tagger()
     return t
 
 
