@@ -55,4 +55,4 @@ from baikalnlpy._custom_dict_client import CustomDictionaryServiceClient
 from baikalnlpy._lang_service_client import BaikalLanguageServiceClient
 
 version = "1.0"
-baikal_nlp_version = "1.7.0"
+baikal_nlp_version = "1.7.3"

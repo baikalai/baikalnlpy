@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 from sys import stdout
-from typing import IO, Union
+from typing import IO, List, Any
 
 from google.protobuf.json_format import MessageToDict
 
@@ -15,8 +15,6 @@ class Tagged:
     Tagged result.
     It has various output manipulations.
     """
-    phrase: str = None
-    r: AnalyzeSyntaxResponse = None
 
     def __init__(self, phrase: str, res: AnalyzeSyntaxResponse):
         """
@@ -39,13 +37,16 @@ class Tagged:
         """
         return self.r
 
-    def sentences(self) -> [Sentence]:
+    def sentences(self) -> List[Sentence]:
         """
         :return: get sentences from tagged results.
         """
-        return self.r.sentences
+        ret = list()
+        for s in self.r.sentences:
+            ret.append(s)
+        return ret
 
-    def as_json(self) -> Union[None, str, bool, float]:
+    def as_json(self):
         """
         convert the message to a json object.
         :return: Json Obejct
@@ -87,7 +88,7 @@ class Tagged:
             else:
                 return m.text.content, Morpheme.Tag.Name(m.tag)
 
-    def pos(self, flatten: bool = True, join: bool = False, detail: bool = False) -> []:
+    def pos(self, flatten: bool = True, join: bool = False, detail: bool = False) -> List:
         """
         POS tagger to tuple.
         :param flatten : If False, returns original morphs.
@@ -103,20 +104,20 @@ class Tagged:
                     for s in self.r.sentences
                     for token in s.tokens]
 
-    def morphs(self) -> []:
+    def morphs(self) -> List:
         """Parse phrase to morphemes."""
         return [m.text.content for s in self.r.sentences
                 for token in s.tokens
                 for m in token.morphemes]
 
-    def nouns(self) -> []:
+    def nouns(self) -> List:
         """Noun extractor."""
         return [m.text.content for s in self.r.sentences
                 for token in s.tokens
                 for m in token.morphemes
                 if m.tag in {Morpheme.Tag.NNP, Morpheme.Tag.NNG, Morpheme.Tag.NP, Morpheme.Tag.NNB}]
 
-    def verbs(self) -> []:
+    def verbs(self) -> List:
         """Noun extractor."""
         return [m.text.content for s in self.r.sentences
                 for token in s.tokens
@@ -125,8 +126,8 @@ class Tagged:
 
 
 class Tagger:
-    """Wrapper for `baikal-nlp v1.7.x <https://github.com/baikal-ai>`_.
-    'baikalNLP' is a morphological analyzer developed by Baikal-ai.
+    """Wrapper for `baikal-nlp v1.7.x <https://github.com/baikalai>`_.
+    'baikalNLP' is a morphological analyzer developed by Baikal AI, Inc..
 
     .. code-block:: python
         :emphasize-lines: 1
@@ -144,41 +145,54 @@ class Tagger:
     :param domain       : custom domain name for nlp request
     """
 
-    domain = None
-    host = "nlp.baikal.ai"
-    post = 5656
+    def __init__(self, host: str = "", port: int = 5656, domain: str = ""):
 
-    def __init__(self, host: str = None, port: int = 5656, domain: str = None):
+        if host:
+            host = host.strip()
+        if domain:
+            domain = domain.strip()
 
-        if host is not None:
+        if host == "" or host is None:
+            self.host = 'nlp.baikal.ai'
+        else:
             self.host = host
+
         if port is not None:
             self.port = port
+        else:
+            self.port = 5656
         self.domain = domain
 
         addr = self.host + ':' + str(self.port)
         self.client = BaikalLanguageServiceClient(addr)
+        self.custom_dicts = {}
 
     def set_domain(self, domain: str):
         """
         Set domain of custom dict.
         :param domain: domain name of custom dict
-        :return: None
         """
         self.domain = domain
 
     def custom_dict(self, domain: str) -> CustomDict:
-        self.domain = domain
-        return CustomDict(domain, self.host, self.port)
+        # self.domain = domain
+        if domain == "" or domain is None:
+            raise ValueError("invalid domain name for custom dict")
+
+        if domain in self.custom_dicts:
+            return self.custom_dicts[domain]
+        else:
+            self.custom_dicts[domain] = CustomDict(domain, self.host, self.port)
+            return self.custom_dicts[domain]
 
     def tag(self, phrase: str, auto_split: bool = False) -> Tagged:
         if len(phrase) is 0:
             print("OOPS, no sentences.")
-            return Tagged('', None)
+            return Tagged('', AnalyzeSyntaxResponse())
         return Tagged(phrase,
                       self.client.analyze_syntax(phrase, self.domain, auto_split))
 
-    def tags(self, phrase: [str]) -> Tagged:
+    def tags(self, phrase: List[str]) -> Tagged:
         """
         tag string array.
         :param phrase: array of string
@@ -186,12 +200,12 @@ class Tagger:
         """
         if len(phrase) is 0:
             print("OOPS, no sentences.")
-            return Tagged('', None)
+            return Tagged('', AnalyzeSyntaxResponse())
         p = '\n'.join(phrase)
         return Tagged(p,
                       self.client.analyze_syntax(p, self.domain, auto_split=False))
 
-    def pos(self, phrase: str, flatten: bool = True, join: bool = False, detail: bool = False) -> []:
+    def pos(self, phrase: str, flatten: bool = True, join: bool = False, detail: bool = False) -> List:
         """
         POS tagger.
         :param phrase  : string to analyse
@@ -201,14 +215,14 @@ class Tagger:
         """
         return self.tag(phrase).pos(flatten, join, detail)
 
-    def morphs(self, phrase: str) -> []:
+    def morphs(self, phrase: str) -> List:
         """Parse phrase to morphemes."""
         return self.tag(phrase).morphs()
 
-    def nouns(self, phrase: str) -> []:
+    def nouns(self, phrase: str) -> List:
         """Noun extractor."""
         return self.tag(phrase).nouns()
 
-    def verbs(self, phrase: str) -> []:
+    def verbs(self, phrase: str) -> List:
         """Verbs extractor."""
         return self.tag(phrase).verbs()

@@ -14,9 +14,11 @@ pip3 install baikalnlpy
 ## How to get baikal NLP
 - Go to https://license.baikal.ai/.
   - With registration, for the first time, you can get a free license for 3 months.
+  - If you are a student or a researcher, you can get also a free license for 1 year,
+    which is able to renew after 1 year.
 - Or use docker image.
 ```shell
-docker pull baikalai/baikal-nlp:v1.7.0
+docker pull baikalai/baikal-nlp:v1.7.3
 ```
 
 ## How to use
@@ -26,9 +28,12 @@ import sys
 import google.protobuf.text_format as tf
 from baikalnlpy import Tagger
 
-my_tagger = Tagger('localhost') # If you have your own localhost baikal NLP. 
-# or
-tagger = Tagger() # With smaller public cloud instance, it may be slow.
+# If you have your own localhost baikal NLP. 
+my_tagger = Tagger('localhost')
+# or if you have your own baikal NLP which is running on 10.8.3.211:15656.
+my_tagger = Tagger('10.8.3.211', 15656)
+# or with smaller public cloud instance, it may be slow. It is free.
+tagger = Tagger()
 
 # print results. 
 res = tagger.tags(["안녕하세요.", "반가워요!"])
@@ -67,6 +72,10 @@ cust_dic.copy_np_set({'내고유명사', '우리집고유명사'})
 cust_dic.copy_cp_set({'코로나19'})
 cust_dic.copy_cp_caret_set({'코로나^백신', '"독감^백신'})
 cust_dic.update()
+
+# laod prev custom dict
+cust_dict2 = tagger.custom_dict("my")
+cust_dict2.load()
 
 tagger.set_domain('my')
 tagger.pos('코로나19는 언제 끝날까요?')
